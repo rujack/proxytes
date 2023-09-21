@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 });
 
 // Endpoint proxy untuk memanggil API 1inch.dev
-app.get('/proxy', async (req, res) => {
+app.get('/quote', async (req, res) => {
   try {
     const apiUrl = 'https://api.1inch.dev/swap/v5.2/56/quote';
     const params = {
