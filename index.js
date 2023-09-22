@@ -30,13 +30,17 @@ app.get('/quote', async (req, res) => {
     res.json(response.data);
   } catch (error) {
     console.error(error);
-    if (error.response) {
-        // Jika ada respons dari API 1inch, gunakan status yang sama
-        res.status(error.response.status).json(error.response.data);
-      } else {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-      }
+    if (error.response.status == 400) {
+            res.status(error.response.status).json(error.response.data);
+        } else if (error.response.status == 429) {
+            res.status(error.response.status).json({
+                "statusCode": error.response.status,
+                "description": "Too Many Requests"
+            })
+        }
+        else {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
   }
 });
 
@@ -44,7 +48,10 @@ app.get('/',(req,res)=>{
     res.status(200).json('proxy nih boss!! awokawok')
 })
 
-// Jalankan server
+app.get('/*', (req, res) => {
+    res.status(404).send('NOT FOUND NIH BOSS!!')
+})
+
 app.listen(port, () => {
   console.log(`Proxy server is running on port ${port}`);
 });
