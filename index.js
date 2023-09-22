@@ -48,9 +48,9 @@ app.get('/',(req,res)=>{
     res.status(200).json('proxy nih boss!! awokawok')
 })
 
-app.get('/*', (req, res) => {
-    res.status(404).send('NOT FOUND NIH BOSS!!')
-})
+// app.get('/*', (req, res) => {
+//     res.status(404).send('NOT FOUND NIH BOSS!!')
+// })
 
 app.listen(port, () => {
   console.log(`Proxy server is running on port ${port}`);
