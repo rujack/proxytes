@@ -30,7 +30,13 @@ app.get('/quote', async (req, res) => {
         res.json(response.data);
     } catch (error) {
         // console.error(error);
-        if (error.response.status == 400) {
+        if (error.response.status == 401) {
+            res.status(error.response.status).json({
+                "statusCode": error.response.status,
+                "description": "Unauthorized"
+            });
+        }
+        else if (error.response.status == 400) {
             res.status(error.response.status).json(error.response.data);
         } else if (error.response.status == 429) {
             res.status(error.response.status).json({
@@ -39,7 +45,7 @@ app.get('/quote', async (req, res) => {
             })
         }
         else {
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ error:"Internal Server Error" });
         }
     }
 });
